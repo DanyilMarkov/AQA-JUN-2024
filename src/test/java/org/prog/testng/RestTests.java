@@ -5,9 +5,10 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.prog.dto.ResponseDto;
+import org.prog.dto.PersonDto;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
+import java.util.List;
 public class RestTests {
 
     //TODO: add location to included fields
@@ -17,7 +18,7 @@ public class RestTests {
     @Test
     public void getRandomUser() {
         RequestSpecification requestSpecification = RestAssured.given();
-        requestSpecification.queryParam("inc", "gender,name,nat");
+        requestSpecification.queryParam("inc", "gender,name,location,nat");
         requestSpecification.queryParam("noinfo");
         requestSpecification.queryParam("results", 10);
         requestSpecification.baseUri("https://randomuser.me/");
@@ -32,6 +33,8 @@ public class RestTests {
 
 //        List<String> genders = response.jsonPath().get("results.gender");
 //        Assert.assertTrue(genders.contains("female"));
+        List<String> cities = response.jsonPath().get("results.location.city");
+        Assert.assertNotNull(cities);
 
         ResponseDto dto = response.as(ResponseDto.class);
         Assert.assertEquals(dto.getResults().size(), 10,
