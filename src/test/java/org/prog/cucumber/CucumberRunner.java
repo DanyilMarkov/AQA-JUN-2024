@@ -6,13 +6,14 @@ import org.openqa.selenium.WebDriver;
 import org.prog.cucumber.steps.WebSteps;
 import org.prog.driver.WedDriverFactory;
 import org.prog.page.GooglePage;
+import org.prog.page.AlloPage;
 import org.prog.util.CucumberStorage;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 @CucumberOptions(
-        features = "src/test/resources/features",
+        features = "src/test/resources/features/allo.feature",
         glue = "org.prog.cucumber.steps",
         plugin = {"pretty",
                 "json:target/cucumber-reports/Cucumber.json",
@@ -25,7 +26,7 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
     @BeforeSuite
     public void init() {
         driver = WedDriverFactory.getDriver();
-        WebSteps.googlePage = new GooglePage(driver);
+        WebSteps.alloPage = new org.prog.page.AlloPage(driver);
     }
 
     @BeforeMethod
